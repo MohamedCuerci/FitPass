@@ -1,3 +1,79 @@
 //  colocar aqui antes do import
 
+.custom-btn {
+  background-color: #2B7FFF !important;
+  border-color: #2B7FFF;
+  // color: white;
+}
+
+.custom-btn:hover {
+  background-color: #00A3FF !important;
+  border-color: #00A3FF;
+}
+
+
+// --------------------------------
+
+// Sobrescrevendo variáveis do Bootstrap com nossa paleta
+$primary: #2B7FFF;
+$secondary: #1A2B4C;
+$success: #00A3FF;
+
+// Customizações adicionais
+$btn-font-weight: 600;
+$card-border-radius: 1rem;
+$input-btn-padding-y-lg: 0.75rem;
+$border-radius-lg: 0.75rem;
+
+// Estilos adicionais
+.form-control:focus {
+  border-color: $primary;
+  box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+}
+
+.btn-primary {
+  &:hover {
+    background-color: darken($primary, 10%);
+    border-color: darken($primary, 10%);
+  }
+}
+
+// Customização dos links do Devise
+.devise-links {
+  a {
+    color: $primary;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Estilização das mensagens de erro
+#error_explanation {
+  @extend .alert;
+  @extend .alert-danger;
+  margin-bottom: 1rem;
+  
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  ul {
+    margin-bottom: 0;
+  }
+}
+
+.field_with_errors {
+  @extend .is-invalid;
+  
+  .form-control {
+    @extend .is-invalid;
+  }
+}
+
+// ---------------------------------------
+
 @import "bootstrap";
