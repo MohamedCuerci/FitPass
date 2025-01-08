@@ -14,4 +14,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  get "payments/new"
+  # get "payments/create"
+  post 'payments/process_payment', to: 'payments#process_payment'
+
+  # get 'status_payment/success', to: 'payments#success'
+  # get 'status_payment/failure', to: 'payments#failure'
+  # get 'status_payment/pending', to: 'payments#pending'
+  get 'status_payment/:payment_id', to: 'payments#status', as: 'status_payment'
 end

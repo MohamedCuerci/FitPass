@@ -1,0 +1,40 @@
+<div id="statusScreenBrick_container"></div>
+
+<script>
+  const mp = new MercadoPago('<%= Rails.application.credentials.mercado_pago["public_key"] %>', { // Add your public key credential
+    locale: 'pt-BR'
+  });
+  const bricksBuilder = mp.bricks();
+  const renderStatusScreenBrick = async (bricksBuilder) => {
+    const settings = {
+      initialization: {
+        paymentId: '<%= @payment_id %>', // Payment identifier, from which the status will be checked
+      },
+      customization: {
+        visual: {
+              hideStatusDetails: true,
+              hideTransactionDate: true,
+              style: {
+              theme: 'bootstrap', // 'default' | 'dark' | 'bootstrap' | 'flat'
+              },
+          },
+        backUrls: {
+          'error': 'http://localhost:3000/payments/new',
+          'return': 'http://localhost:3000/'
+        }
+      },
+      callbacks: {
+        onReady: () => {
+          // Callback called when Brick is ready
+          console.log('Status screen Brick pronto!');
+        },
+        onError: (error) => {
+          // Callback called for all Brick error cases
+          console.error('Erro ao carregar o Brick:', error);
+        },
+      },
+    };
+    window.statusScreenBrickController = await bricksBuilder.create('statusScreen', 'statusScreenBrick_container', settings);
+  };
+  renderStatusScreenBrick(bricksBuilder);
+</script>
