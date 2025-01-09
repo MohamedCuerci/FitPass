@@ -116,7 +116,6 @@ class PaymentsController < ApplicationController
     else
       render json: { status: 'error', error: @payment['status_detail'] || "Erro ao processar o pagamento"}, status: :unprocessable_entity
     end
-    
   end
 
   def status

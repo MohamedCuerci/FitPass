@@ -74,6 +74,32 @@ $border-radius-lg: 0.75rem;
   }
 }
 
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.hover-link:hover {
+  color: #00A3FF !important;
+  transition: color 0.3s ease;
+}
+
+.hover-social:hover {
+  color: #2B7FFF !important;
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+footer hr {
+  opacity: 0.1;
+}
+
+
 // ---------------------------------------
 
 @import "bootstrap";
