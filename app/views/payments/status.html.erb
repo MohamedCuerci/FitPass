@@ -1,14 +1,21 @@
-<div id="statusScreenBrick_container"></div>
+<div class="container">
+  <div id="loading-status-payment" class="text-center p-4">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <div id="statusScreenBrick_container"></div>
+</div>
 
 <script>
-  const mp = new MercadoPago('<%= Rails.application.credentials.mercado_pago["public_key"] %>', { // Add your public key credential
-    locale: 'pt-BR'
-  });
-  const bricksBuilder = mp.bricks();
   const renderStatusScreenBrick = async (bricksBuilder) => {
+    const loadingElement = document.getElementById('loading-status-payment');
+    const paymentContainer = document.getElementById('statusScreenBrick_container');
+
     const settings = {
       initialization: {
-        paymentId: '<%= @payment_id %>', // Payment identifier, from which the status will be checked
+        paymentId: '<%= @payment_id %>',
       },
       customization: {
         visual: {
@@ -25,16 +32,26 @@
       },
       callbacks: {
         onReady: () => {
-          // Callback called when Brick is ready
+          loadingElement.style.display = 'none';
+          paymentContainer.style.display = 'block';
           console.log('Status screen Brick pronto!');
         },
         onError: (error) => {
-          // Callback called for all Brick error cases
           console.error('Erro ao carregar o Brick:', error);
         },
       },
     };
-    window.statusScreenBrickController = await bricksBuilder.create('statusScreen', 'statusScreenBrick_container', settings);
+
+    window.statusScreenBrickController = await bricksBuilder.create(
+      'statusScreen', 
+      'statusScreenBrick_container', 
+      settings
+    );
   };
-  renderStatusScreenBrick(bricksBuilder);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const mp = new MercadoPago('<%= Rails.application.credentials.mercado_pago["public_key"] %>', { locale: 'pt-BR' });
+    const bricksBuilder = mp.bricks();
+    renderStatusScreenBrick(bricksBuilder);
+  });
 </script>

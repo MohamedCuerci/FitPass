@@ -5,13 +5,7 @@ class PaymentsController < ApplicationController
   before_action :set_mercado_pago_client, only: [:new, :process_payment]
 
   def new
-    # falta implementar aqui dentreo talvez
-    # aparte de back end do app
     # https://www.mercadopago.com.br/developers/pt/live-demo/payment-brick
-
-    # em teoria eu ja teria selecionado o produto q quero comprar
-    # ex:
-    # @products.all
 
     payment_request = {
       transaction_amount: 100,
@@ -89,6 +83,11 @@ class PaymentsController < ApplicationController
     # payment = payment_response[:response]
 
     @price = 150
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
@@ -122,7 +121,12 @@ class PaymentsController < ApplicationController
 
   def status
     # https://www.mercadopago.com.br/developers/pt/live-demo/status-screen-brick
-    @payment_id = params[:payment_id] # Obtém o payment_id da URL
+    @payment_id = params[:payment_id]
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private
