@@ -1,13 +1,12 @@
 
 <div class="container">
   <div id="paymentBrick_container"></div>
-   <% <div id="walletBrick_container"></div> %>
 </div>
 
 <script>
   const mp = new MercadoPago('<%= Rails.application.credentials.mercado_pago["public_key"] %>', { locale: 'pt-BR' });
-
   const bricksBuilder = mp.bricks();
+
   const renderPaymentBrick = async (bricksBuilder) => {
     const settings = {
       initialization: {
@@ -31,10 +30,6 @@
           bankTransfer: "all",
           // atm: "all",
           maxInstallments: 1
-        },
-        backUrls: {
-          'error': 'http://localhost:3000/payments/new',
-          'return': 'http://localhost:3000/status_payment/'
         }
       },
       callbacks: {
@@ -56,18 +51,17 @@
             })
               .then((response) => response.json())
               .then((response) => {
-                // Exibir status do pagamento (redirecionar, mostrar mensagem, etc.)
-                window.location.href = `http://localhost:3000/status_payment/${response.payment_id}`;
-                console.log("Pagamento processado: ", response);
-                resolve();
+                if (response.status === 'success' && response.redirect_url) {
+                  window.location.href = response.redirect_url;
+                  resolve();
+                } else {
+                  // console.error("Erro na resposta:", response);
+                  reject(response.error || "Erro desconhecido");
+                }
               })
               .catch((error) => {
-                // console.log(error);
-                // console.log("aqui no erro");
-                console.log(response);
-                // ta caindo aqui dentro por algum motivo
-                console.error("Erro ao processar pagamento: ", error);
-                reject();
+                // console.error("Erro na requisição:", error);
+                reject(error);
               });
           });
         },
@@ -86,3 +80,6 @@
 
   renderPaymentBrick(bricksBuilder);
 </script>
+
+
+<%# Erro ao processar pagamento:  SyntaxError: Unexpected token '<', "<!-- BEGIN"... is not valid JSON %>

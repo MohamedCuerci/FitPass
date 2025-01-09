@@ -12,15 +12,7 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-
   get "payments/new"
-  # get "payments/create"
   post 'payments/process_payment', to: 'payments#process_payment'
-
-  # get 'status_payment/success', to: 'payments#success'
-  # get 'status_payment/failure', to: 'payments#failure'
-  # get 'status_payment/pending', to: 'payments#pending'
   get 'status_payment/:payment_id', to: 'payments#status', as: 'status_payment'
 end
