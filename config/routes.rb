@@ -12,7 +12,18 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  get "payments/new"
-  post 'payments/process_payment', to: 'payments#process_payment'
-  get 'status_payment/:payment_id', to: 'payments#status', as: 'status_payment'
+  # rotas mercado pago
+  # get "payments/new"
+  # post 'payments/process_payment', to: 'payments#process_payment'
+  # get 'status_payment/:payment_id', to: 'payments#status', as: 'status_payment'
+
+  namespace :payments do
+    # stripe
+    get 'stripe/new', to: 'stripe#new'
+
+    # Mercado Pago
+    get 'mercado_pago/new', to: 'mercado_pago#new'
+    post 'mercado_pago/process_payment', to: 'mercado_pago#process_payment'
+    get 'mercado_pago/status_payment/:payment_id', to: 'mercado_pago#status', as: 'mercado_pago_status_payment'
+  end  
 end
