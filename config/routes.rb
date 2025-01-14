@@ -19,11 +19,17 @@ Rails.application.routes.draw do
 
   namespace :payments do
     # stripe
-    get 'stripe/new', to: 'stripe#new'
+    # get 'stripe/new', to: 'stripe#new'
+    resources :stripe, only: [ :new, :create ] do
+      collection do
+        # get :success
+        get :status
+      end
+    end
 
     # Mercado Pago
-    get 'mercado_pago/new', to: 'mercado_pago#new'
-    post 'mercado_pago/process_payment', to: 'mercado_pago#process_payment'
-    get 'mercado_pago/status_payment/:payment_id', to: 'mercado_pago#status', as: 'mercado_pago_status_payment'
-  end  
+    get "mercado_pago/new", to: "mercado_pago#new"
+    post "mercado_pago/process_payment", to: "mercado_pago#process_payment"
+    get "mercado_pago/status_payment/:payment_id", to: "mercado_pago#status", as: "mercado_pago_status_payment"
+  end
 end

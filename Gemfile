@@ -71,3 +71,5 @@ gem 'mercadopago-sdk'
 
 gem 'faraday'
 gem 'faraday_middleware'
+
+gem 'stripe'
