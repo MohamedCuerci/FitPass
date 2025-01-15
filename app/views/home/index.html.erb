@@ -53,7 +53,7 @@
             </li>
           </ul>
           <!--<a href="<%= payments_mercado_pago_new_path(plan: 'basic') %>" class="btn btn-outline-primary w-100 py-3">-->
-          <a href="<%= root_path %>" class="btn btn-outline-primary w-100 py-3">
+          <a href="https://buy.stripe.com/test_5kA5nXgyg9aecco4gh" target="_blank" class="btn btn-outline-primary w-100 py-3">
             Assinar Plano Básico
           </a>
         </div>
@@ -93,7 +93,7 @@
             </li>
           </ul>
           <!--<a href="<%= payments_mercado_pago_new_path(plan: 'premium') %>" class="btn btn-primary w-100 py-3">-->
-          <a href="<%= root_path %>" class="btn btn-primary w-100 py-3">
+          <a href="https://buy.stripe.com/test_eVa4jTeq8fyC90c9AA" target="_blank" class="btn btn-primary w-100 py-3">
             Assinar Plano Premium
           </a>
         </div>
@@ -130,9 +130,13 @@
             </li>
           </ul>
           <!--<a href="<%= payments_mercado_pago_new_path(plan: 'business') %>" class="btn btn-outline-primary w-100 py-3">-->
-          <a href="<%= root_path %>" class="btn btn-outline-primary w-100 py-3">
+          <!--<a href="https://buy.stripe.com/test_bIY17Ha9S5Y22BO002" target="_blank" class="btn btn-outline-primary w-100 py-3">
             Assinar Plano Business
-          </a>
+          </a>-->
+          <%= link_to 'Assinar Plano Business', 
+            new_payments_stripe_path(name: "Plano Business", amount: "199.90"), 
+            class: 'btn btn-outline-primary w-100 py-3', 
+            target: '_blank' %>
         </div>
       </div>
     </div>

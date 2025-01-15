@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stripe_id: MyString
+  event_type: MyString
+  status: MyString
+  metadata: 
+
+two:
+  stripe_id: MyString
+  event_type: MyString
+  status: MyString
+  metadata: 

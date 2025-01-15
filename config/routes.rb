@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       collection do
         # get :success
         get :status
+        post :webhook
       end
     end
 
