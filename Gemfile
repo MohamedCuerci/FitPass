@@ -73,3 +73,6 @@ gem 'faraday'
 gem 'faraday_middleware'
 
 gem 'stripe'
+
+# ;geolocalização
+gem 'geocoder', '~> 1.8', '>= 1.8.5'

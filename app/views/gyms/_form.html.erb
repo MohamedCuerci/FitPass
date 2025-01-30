@@ -1,0 +1,182 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h2 class="card-title text-primary mb-4">
+            <i class="fa-solid fa-dumbbell me-2"></i>
+            <%= gym.new_record? ? "Nova Academia" : "Editar Academia" %>
+          </h2>
+
+          <%= form_with(model: gym, class: "needs-validation") do |form| %>
+            <% if gym.errors.any? %>
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <h6 class="alert-heading fw-bold">
+                  <i class="fa-solid fa-circle-exclamation me-2"></i>
+                  <%= pluralize(gym.errors.count, "erro") %> impediram o salvamento:
+                </h6>
+                <ul class="mb-0">
+                  <% gym.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% end %>
+
+            <div class="mb-3">
+              <%= form.label :name, "Nome da Academia", class: "form-label fw-medium" %>
+              <%= form.text_field :name, 
+                  class: "form-control form-control-lg #{gym.errors[:name].present? ? 'is-invalid' : ''}", 
+                  placeholder: "Digite o nome da academia" %>
+              <% if gym.errors[:name].present? %>
+                <div class="invalid-feedback"><%= gym.errors[:name].first %></div>
+              <% end %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :description, "Descrição", class: "form-label fw-medium" %>
+              <%= form.text_area :description, 
+                  class: "form-control form-control-lg #{gym.errors[:description].present? ? 'is-invalid' : ''}", 
+                  rows: 4,
+                  placeholder: "Descreva os detalhes da academia" %>
+              <% if gym.errors[:description].present? %>
+                <div class="invalid-feedback"><%= gym.errors[:description].first %></div>
+              <% end %>
+            </div>
+
+            <div class="mb-4">
+              <%= form.label :plan, "Plano", class: "form-label fw-medium" %>
+              <%= form.select :plan, 
+                  Gym.plans.keys.map { |plan| [plan.humanize, plan] },
+                  { prompt: "Selecione um plano" },
+                  { class: "form-select form-select-lg #{gym.errors[:plan].present? ? 'is-invalid' : ''}" } %>
+              <% if gym.errors[:plan].present? %>
+                <div class="invalid-feedback"><%= gym.errors[:plan].first %></div>
+              <% end %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :photos, "Fotos da academia", class: "form-label fw-medium" %>
+              <div class="input-group input-group-lg">
+                <%= form.file_field :photos, 
+                    multiple: true, 
+                    direct_upload: true,
+                    class: "form-control #{gym.errors[:photos].present? ? 'is-invalid' : ''}",
+                    accept: "image/*",
+                    data: { 
+                      bs_toggle: "tooltip", 
+                      bs_placement: "top"
+                    },
+                    title: "Selecione uma ou mais fotos" %>
+                <label class="input-group-text bg-primary text-white">
+                  <i class="fa-solid fa-camera"></i>
+                </label>
+              </div>
+              <div class="form-text">Aceita múltiplas fotos (PNG, JPG, JPEG)</div>
+              <% if gym.errors[:photos].present? %>
+                <div class="invalid-feedback"><%= gym.errors[:photos].first %></div>
+              <% end %>
+            </div>
+
+            <%# address %>
+              <!-- Campos de endereço que serão preenchidos automaticamente -->
+            <%= form.fields_for :address do |address_form| %>
+              <div>
+                <%= form.label :cep, style: "display: block" %>
+                <%= form.text_field :cep, id: "cep" %>
+              </div>
+
+              <div>
+                <%= form.label :gym_id, style: "display: block" %>
+                <%= form.text_field :gym_id %>
+              </div>
+
+              <div>
+                <%= address_form.label :street, style: "display: block" %>
+                <%= address_form.text_field :street, id: "street" %>
+              </div>
+
+              <div>
+                <%= address_form.label :number, style: "display: block" %>
+                <%= address_form.text_field :number, id: "number" %>
+              </div>
+
+              <div>
+                <%= address_form.label :complement, style: "display: block" %>
+                <%= address_form.text_field :complement, id: "complement" %>
+              </div>
+
+              <div>
+                <%= address_form.label :neighborhood, style: "display: block" %>
+                <%= address_form.text_field :neighborhood, id: "neighborhood" %>
+              </div>
+
+              <div>
+                <%= address_form.label :city, style: "display: block" %>
+                <%= address_form.text_field :city, id: "city" %>
+              </div>
+
+              <div>
+                <%= address_form.label :state, style: "display: block" %>
+                <%= address_form.text_field :state, id: "state" %>
+              </div>
+
+              <div>
+                <%= address_form.label :latitude, style: "display: block" %>
+                <%= address_form.text_field :latitude %>
+              </div>
+
+              <div>
+                <%= address_form.label :longitude, style: "display: block" %>
+                <%= address_form.text_field :longitude %>
+              </div>
+            <% end %>
+
+            <%#  %>
+            <%= form.fields_for :contact do |contact_form| %>
+              <div>
+                <%= contact_form.label :contact_type, style: "display: block" %>
+                <%= contact_form.number_field :contact_type %>
+              </div>
+
+              <div>
+                <%= contact_form.label :value, style: "display: block" %>
+                <%= contact_form.text_field :value %>
+              </div>
+            <% end %>
+
+            <div class="d-grid gap-2">
+              <%= form.submit gym.new_record? ? "Criar Academia" : "Atualizar Academia", 
+                  class: "btn btn-primary btn-lg mb-2" %>
+              <%= link_to "Cancelar", gyms_path, 
+                  class: "btn btn-outline-secondary btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.getElementById("cep").addEventListener("blur", function() {
+    const cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (cep.length === 8) {
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.erro) {
+            document.getElementById("street").value = data.logradouro;
+            document.getElementById("neighborhood").value = data.bairro;
+            document.getElementById("city").value = data.localidade;
+            document.getElementById("state").value = data.uf;
+          } else {
+            alert("CEP não encontrado.");
+          }
+        })
+        .catch(error => console.error("Erro ao buscar CEP:", error));
+    }
+  });
+</script>

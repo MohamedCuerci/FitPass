@@ -1,0 +1,37 @@
+<%= form_with(model: gym_hour) do |form| %>
+  <% if gym_hour.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(gym_hour.errors.count, "error") %> prohibited this gym_hour from being saved:</h2>
+
+      <ul>
+        <% gym_hour.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :gym_id, style: "display: block" %>
+    <%= form.text_field :gym_id %>
+  </div>
+
+  <div>
+    <%= form.label :day_of_week, style: "display: block" %>
+    <%= form.number_field :day_of_week %>
+  </div>
+
+  <div>
+    <%= form.label :opening_time, style: "display: block" %>
+    <%= form.time_field :opening_time %>
+  </div>
+
+  <div>
+    <%= form.label :closing_time, style: "display: block" %>
+    <%= form.time_field :closing_time %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

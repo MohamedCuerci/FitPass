@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :gyms do
+    resources :addresses
+    resources :contacts
+    resources :gym_hours
+  end
+
   devise_for :users
   # get "home/index"
   root "home#index"

@@ -107,6 +107,10 @@ footer hr {
   box-sizing: border-box;
 }
 
+.dale {
+  margin-bottom: 100px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
@@ -120,7 +124,7 @@ body {
 }
 
 // caso eu queria colocar as informações do produto, posso descomentar e colocar ao lado
-form {
+.payment-form {
   // width: 30vw;
   min-width: 500px;
   align-self: center;
@@ -346,6 +350,28 @@ td {
   }
 }
 
+// ---------------------------------------------
+
+// app/assets/stylesheets/gyms.scss
+.carousel {
+  .carousel-item {
+    transition: transform .6s ease-in-out;
+  }
+  
+  img {
+    object-fit: cover;
+    height: 500px;
+  }
+}
+
+.img-thumbnail {
+  cursor: pointer;
+  transition: opacity .2s ease-in-out;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
 
 
 

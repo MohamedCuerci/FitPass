@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Gyms" %>
+<%= link_to "New gym", new_gym_path %>
+<h1>Gyms</h1>
+
+<div id="gyms">
+  <% @gyms.each do |gym| %>
+    <div id="<%#= dom_id gym %>">
+      <p>
+        <strong>Name:</strong>
+        <%= gym.name %>
+      </p>
+
+      <p>
+        <strong>Description:</strong>
+        <%= gym.description %>
+      </p>
+
+      <p>
+        <strong>Plan:</strong>
+        <%= gym.plan %>
+      </p>
+
+    </div>
+    <p>
+      <%= link_to "Show this gym", gym %>
+    </p>
+  <% end %>
+</div>
+
+

@@ -11,9 +11,6 @@ module Payments
     end
 
     def create
-      # a = 1
-      # debugger
-
       payment_intent = Stripe::PaymentIntent.create(
         amount: params[:items].first["amount"].to_i * 100 + 90,
         currency: "brl",

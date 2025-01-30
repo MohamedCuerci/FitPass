@@ -1,0 +1,162 @@
+<!--<div id="<%#= dom_id gym %>">
+  <p>
+    <strong>Name:</strong>
+    <%#= gym.name %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%#= gym.description %>
+  </p>
+
+  <p>
+    <strong>Plan:</strong>
+    <%#= gym.plan %>
+  </p>
+
+</div>-->
+
+
+<%# app/views/gyms/show.html.erb %>
+<div class="container-fluid p-0">
+  <%# Header da Academia %>
+  <div class="bg-white shadow-sm mb-4">
+    <div class="container py-4">
+      <p class="text-muted mb-1">Academia</p>
+      <h1 class="display-6 fw-bold mb-0"><%= @gym.name %></h1>
+    </div>
+  </div>
+
+  <div data-controller="hello">
+    Hello, Stimulus!
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <%# Coluna Principal com Carousel %>
+      <div class="col-lg-8 mb-4" data-controller="carousel">
+        <%# Carousel de Imagens %>
+        <div id="gymCarousel" class="carousel slide mb-4 rounded overflow-hidden shadow-sm" data-carousel-target="carousel">
+          <div class="carousel-inner">
+            <% if @gym.photos.attached? %>
+              <% @gym.photos.each_with_index do |photo, index| %>
+                <div class="carousel-item <%= 'active' if index.zero? %>">
+                  <%= image_tag photo, class: "d-block w-100", style: "height: 500px; object-fit: cover;" %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="carousel-item active">
+                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 500px;">
+                  <i class="fa-solid fa-dumbbell fa-3x text-muted"></i>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          
+          <button class="carousel-control-prev" type="button" data-bs-target="#gymCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#gymCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+          </button>
+        </div>
+
+        <%# Thumbnails %>
+        <div class="row g-2 mb-4">
+          <% if @gym.photos.attached? %>
+            <% @gym.photos.first(6).each_with_index do |photo, index| %>
+              <div class="col-2">
+                <%= image_tag photo, 
+                    class: "img-thumbnail", 
+                    style: "height: 80px; object-fit: cover; cursor: pointer;",
+                    data: { 
+                      carousel_target: "thumbnail",
+                      action: "click->carousel#select",
+                      slide_index: index 
+                    } %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# Descrição %>
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Sobre a academia</h5>
+            <p class="card-text"><%= @gym.description %></p>
+          </div>
+        </div>
+      </div>
+
+      <%# Coluna Lateral com Informações %>
+      <div class="col-lg-4">
+        <%# Card de Horários %>
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">
+              <i class="fa-regular fa-clock me-2 text-primary"></i>
+              Horário de funcionamento
+            </h5>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Seg a Sex</span>
+                <span class="text-muted">5h30 - 23h</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Sáb/Feriados</span>
+                <span class="text-muted">8h - 17h</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Dom</span>
+                <span class="text-muted">8h - 14h</span>
+              </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm w-100">
+              Ver ocupação da unidade
+            </button>
+          </div>
+        </div>
+
+        <%# Card de Endereço %>
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">
+              <i class="fa-solid fa-location-dot me-2 text-primary"></i>
+              Endereço
+            </h5>
+            <p class="mb-2"><%= @gym.address %></p>
+            <button class="btn btn-outline-primary btn-sm w-100">
+              Ver rota
+            </button>
+          </div>
+        </div>
+
+        <%# Card Tour Virtual %>
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">
+              <i class="fa-solid fa-360-degrees me-2 text-primary"></i>
+              Faça um tour virtual na academia!
+            </h5>
+            <p class="text-muted small mb-3">
+              Com o tour virtual você consegue conhecer a academia antes de contratar o plano!
+            </p>
+            <button class="btn btn-outline-primary btn-sm w-100">
+              Fazer tour pela academia
+            </button>
+          </div>
+        </div>
+
+        <%# Botão Principal %>
+        <div class="d-grid">
+          <button class="btn btn-primary btn-lg">
+            Quero treinar aqui!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
