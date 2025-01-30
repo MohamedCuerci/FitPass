@@ -1,32 +1,64 @@
-<p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Gyms" %>
-<%= link_to "New gym", new_gym_path %>
-<h1>Gyms</h1>
 
-<div id="gyms">
-  <% @gyms.each do |gym| %>
-    <div id="<%#= dom_id gym %>">
-      <p>
-        <strong>Name:</strong>
-        <%= gym.name %>
-      </p>
-
-      <p>
-        <strong>Description:</strong>
-        <%= gym.description %>
-      </p>
-
-      <p>
-        <strong>Plan:</strong>
-        <%= gym.plan %>
-      </p>
-
+<%# -------------------------------------------- %>
+<%# app/views/gyms/index.html.erb %>
+<div class="container-fluid">
+  <div class="row">
+    <%# Barra de pesquisa %>
+    <div class="search-container mb-3 p-3">
+      <div class="input-group">
+        <span class="input-group-text bg-dark">
+          <i class="fas fa-search text-light"></i>
+        </span>
+        <%= form_with url: gyms_path, method: :get, class: "flex-grow-1" do |f| %>
+          <%= f.text_field :query, 
+              class: "form-control",
+              placeholder: "Busque uma academia ou localização",
+              value: params[:query] %>
+        <% end %>
+      </div>
     </div>
-    <p>
-      <%= link_to "Show this gym", gym %>
-    </p>
-  <% end %>
+
+    <%# Filtros %>
+    <div class="filters-container mb-3">
+      <div class="btn-group">
+        <button class="btn btn-outline-secondary">Filtre por plano</button>
+        <button class="btn btn-outline-secondary">Distância</button>
+        <button class="btn btn-outline-secondary">Modalidades</button>
+        <button class="btn btn-outline-secondary">Comodidades</button>
+      </div>
+    </div>
+
+    <%# Lista de academias e mapa %>
+    <div class="row">
+      <%# Lista de academias - lado esquerdo %>
+      <div class="col-md-4 gyms-list">
+        <p class="text-muted mb-4">Foram encontradas mais de <%= @gyms.count %> academias</p>
+        
+        <% @gyms.each do |gym| %>
+          <div class="gym-card mb-3 p-3 border rounded">
+            <div class="d-flex">
+              <%= image_tag(gym.photos.first, class: "gym-thumbnail me-3") if gym.photos.attached? %>
+              <div>
+                <h5 class="mb-1"><%= gym.name %></h5>
+                <p class="text-muted mb-1"><%= gym.address %></p>
+                <small class="text-muted">
+                  <i class="fas fa-location-dot"></i>
+                  <%#= gym.distance %> m
+                </small>
+                <p class="mb-0 mt-2">
+                  <small>Disponível a partir do TP <%#= gym.plan_level %></small>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Mapa - lado direito %>
+      <div class="col-md-8">
+        <div data-controller="map" data-map-markers-value="<%= @markers.to_json %>" style="height: calc(100vh - 150px);"></div>
+      </div>
+    </div>
+  </div>
 </div>
-
-

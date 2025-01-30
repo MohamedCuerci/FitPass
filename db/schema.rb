@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_29_152845) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_30_152438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,16 +54,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_152845) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cep", null: false
     t.index ["gym_id"], name: "index_addresses_on_gym_id"
-  end
-
-  create_table "contacts", force: :cascade do |t|
-    t.bigint "gym_id", null: false
-    t.integer "contact_type", null: false
-    t.string "value", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["gym_id"], name: "index_contacts_on_gym_id"
   end
 
   create_table "gym_hours", force: :cascade do |t|
@@ -82,6 +74,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_152845) do
     t.integer "plan", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "telephone"
   end
 
   create_table "stripe_events", force: :cascade do |t|
@@ -108,6 +102,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_152845) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "gyms"
-  add_foreign_key "contacts", "gyms"
   add_foreign_key "gym_hours", "gyms"
 end

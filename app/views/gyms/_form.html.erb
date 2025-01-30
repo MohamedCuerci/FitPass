@@ -58,6 +58,11 @@
 
             <div class="mb-3">
               <%= form.label :photos, "Fotos da academia", class: "form-label fw-medium" %>
+
+            <% gym.photos.each do |photo| %>
+              <%= form.hidden_field :photos, multiple: true, value: photo.signed_id %>
+            <% end %>
+
               <div class="input-group input-group-lg">
                 <%= form.file_field :photos, 
                     multiple: true, 
@@ -79,17 +84,37 @@
               <% end %>
             </div>
 
+            <div class="mb-3">
+              <%= form.label :email, "Email", class: "form-label fw-medium" %>
+              <%= form.text_field :email, 
+                  class: "form-control form-control-lg #{gym.errors[:email].present? ? 'is-invalid' : ''}", 
+                  placeholder: "Digite o email" %>
+              <% if gym.errors[:email].present? %>
+                <div class="invalid-feedback"><%= gym.errors[:email].first %></div>
+              <% end %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :telephone, "Numero de telefone", class: "form-label fw-medium" %>
+              <%= form.text_field :telephone, 
+                  class: "form-control form-control-lg #{gym.errors[:telephone].present? ? 'is-invalid' : ''}", 
+                  placeholder: "Digite o numero de telefone" %>
+              <% if gym.errors[:telephone].present? %>
+                <div class="invalid-feedback"><%= gym.errors[:telephone].first %></div>
+              <% end %>
+            </div>
+
             <%# address %>
               <!-- Campos de endereço que serão preenchidos automaticamente -->
             <%= form.fields_for :address do |address_form| %>
               <div>
-                <%= form.label :cep, style: "display: block" %>
-                <%= form.text_field :cep, id: "cep" %>
+                <%= address_form.label :cep, style: "display: block" %>
+                <%= address_form.text_field :cep, id: "cep" %>
               </div>
 
               <div>
-                <%= form.label :gym_id, style: "display: block" %>
-                <%= form.text_field :gym_id %>
+                <%#= address_form.label :gym_id, style: "display: block" %>
+                <%#= address_form.text_field :gym_id %>
               </div>
 
               <div>
@@ -123,26 +148,13 @@
               </div>
 
               <div>
-                <%= address_form.label :latitude, style: "display: block" %>
-                <%= address_form.text_field :latitude %>
+                <%#= address_form.label :latitude, style: "display: block" %>
+                <%#= address_form.text_field :latitude %>
               </div>
 
               <div>
-                <%= address_form.label :longitude, style: "display: block" %>
-                <%= address_form.text_field :longitude %>
-              </div>
-            <% end %>
-
-            <%#  %>
-            <%= form.fields_for :contact do |contact_form| %>
-              <div>
-                <%= contact_form.label :contact_type, style: "display: block" %>
-                <%= contact_form.number_field :contact_type %>
-              </div>
-
-              <div>
-                <%= contact_form.label :value, style: "display: block" %>
-                <%= contact_form.text_field :value %>
+                <%#= address_form.label :longitude, style: "display: block" %>
+                <%#= address_form.text_field :longitude %>
               </div>
             <% end %>
 

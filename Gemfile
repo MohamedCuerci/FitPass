@@ -76,3 +76,5 @@ gem 'stripe'
 
 # ;geolocalização
 gem 'geocoder', '~> 1.8', '>= 1.8.5'
+
+gem 'pg_search'

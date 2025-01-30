@@ -126,10 +126,8 @@
               <i class="fa-solid fa-location-dot me-2 text-primary"></i>
               Endereço
             </h5>
-            <p class="mb-2"><%= @gym.address %></p>
-            <button class="btn btn-outline-primary btn-sm w-100">
-              Ver rota
-            </button>
+            <p class="mb-2"><%= format_address(@gym.address) %></p>
+            <%= link_to "Ver rota", "https://www.google.com/maps?q=#{@gym.address.latitude},#{@gym.address.longitude}", target: "_blank", class: "btn btn-outline-primary btn-sm w-100" %>    
           </div>
         </div>
 

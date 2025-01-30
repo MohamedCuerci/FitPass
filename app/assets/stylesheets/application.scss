@@ -373,6 +373,34 @@ td {
   }
 }
 
+// -------------------------------------
+// google maps
+
+.search-container {
+  background-color: #1e1e1e;
+}
+
+.gym-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.gyms-list {
+  height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+#map {
+  width: 100%;
+  border-radius: 4px;
+}
+
+// google
+gmp-map {
+  height: 100%;
+}
 
 
 @import "bootstrap";

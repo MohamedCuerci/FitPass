@@ -4,6 +4,18 @@ class GymsController < ApplicationController
   # GET /gyms or /gyms.json
   def index
     @gyms = Gym.all
+
+    if params[:query].present?
+      @gyms = @gyms.search_by_name_and_address(params[:query])
+    end
+
+    @markers = @gyms.map do |gym|
+      {
+        lat: gym.latitude,
+        lng: gym.longitude,
+        name: gym.name
+      }
+    end
   end
 
   # GET /gyms/1 or /gyms/1.json
@@ -14,11 +26,12 @@ class GymsController < ApplicationController
   def new
     @gym = Gym.new
     @gym.build_address
-    @gym.build_contact
+    # @gym.contacts.build
   end
 
   # GET /gyms/1/edit
   def edit
+    @gym.build_address if @gym.address.nil?
   end
 
   # POST /gyms or /gyms.json
@@ -68,9 +81,8 @@ class GymsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def gym_params
       params.require(:gym).permit(
-        :name, :description, :plan, photos: [],
-        address_attributes: [ :id, :street, :number, :complement, :neighborhood, :city, :state, :cep, :latitude, :longitude ],
-        contact_attributes: [ :id, :contact_type, :value ]
+        :name, :description, :plan, :email, :telephone, photos: [],
+        address_attributes: [ :id, :street, :number, :complement, :neighborhood, :city, :state, :cep, :latitude, :longitude ]
       )
     end
 end
