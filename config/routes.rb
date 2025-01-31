@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     resources :gym_hours
   end
 
+  post "/store_location", to: "sessions#store_location"
+
+
   devise_for :users
   # get "home/index"
   root "home#index"

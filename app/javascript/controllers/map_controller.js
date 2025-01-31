@@ -102,8 +102,8 @@ export default class extends Controller {
 
 
     const mapOptions = {
-      center: { lat: -22.759725, lng: -43.447126 }, // Centro do Rio de Janeiro
-      zoom: 16,
+      center: { lat: -22.7475456, lng: -43.4536448 }, // Centro do Rio de Janeiro
+      zoom: 13,
       mapId: "6a9f95caa20671ee",
       disableDefaultUI: true,
       zoomControl: true,
@@ -116,25 +116,23 @@ export default class extends Controller {
 
     // Aplica o estilo customizado
     this.map.mapTypes.set("styled_map", styledMapType);
-    this.map.setMapTypeId("styled_map");
-    
-    // Create a pin element. icone pra aparecer no mapa
-    const icon = document.createElement("div");
-
-    icon.innerHTML = '<i class="fa-solid fa-dumbbell fa-rotate-by fa-lg" style="--fa-rotate-angle: 45deg;"></i>';
-    
-
-    const pin = new google.maps.marker.PinElement({
-      glyph: icon,
-      glyphColor: "#ffffff",
-      scale: 2,
-      background: "#0055DE",
-      borderColor: "#ffffff",
-    });
+    this.map.setMapTypeId("styled_map")
 
     // Adiciona os marcadores se existirem
     if (this.hasMarkersValue) {
       this.markersValue.forEach(marker => { 
+        // Create a pin element. icone pra aparecer no mapa
+        const icon = document.createElement("div");
+        icon.innerHTML = '<i class="fa-solid fa-dumbbell fa-rotate-by fa-lg" style="--fa-rotate-angle: 45deg;"></i>';
+    
+        const pin = new google.maps.marker.PinElement({
+          glyph: icon,
+          glyphColor: "#ffffff",
+          scale: 2,
+          background: "#0055DE",
+          borderColor: "#ffffff",
+        });
+
         new google.maps.marker.AdvancedMarkerElement({
           position: { lat: marker.lat, lng: marker.lng },
           map: this.map,
