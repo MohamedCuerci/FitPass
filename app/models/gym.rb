@@ -29,4 +29,12 @@ class Gym < ApplicationRecord
 
   validates :name, presence: true
   validates :plan, presence: true
+
+  def distance_from(localization)
+    return nil unless localization
+
+    distance = Geocoder::Calculations.distance_between([localization.first, localization.last], [latitude, longitude])
+    # "#{(distance * 1.8).round(2).to_s.gsub('.', ',')} km"
+    (distance * 1.8).round(2)
+  end
 end

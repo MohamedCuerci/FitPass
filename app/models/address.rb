@@ -2,11 +2,15 @@ class Address < ApplicationRecord
   belongs_to :gym
 
   geocoded_by :full_address
-  after_validation :geocode, if: :will_save_change_to_full_address?
+  after_validation :geocode, if: :should_geocode?
 
   def full_address
     # Ajuste conforme seus campos
     [street, number, neighborhood, city, state].compact.join(', ')
+  end
+
+  def part_address
+    [street, number].compact.join(", ")
   end
 
   before_save :set_latitude_and_longitude
@@ -29,5 +33,12 @@ class Address < ApplicationRecord
 
   def find_address
     [street, city, state, find_country].compact.join(', ')
+  end
+
+  private
+
+  # Método para determinar se a geocodificação deve ser executada
+  def should_geocode?
+    will_save_change_to_street? || will_save_change_to_number? || will_save_change_to_neighborhood? || will_save_change_to_city? || will_save_change_to_state?
   end
 end

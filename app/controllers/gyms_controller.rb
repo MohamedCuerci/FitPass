@@ -9,12 +9,27 @@ class GymsController < ApplicationController
       @gyms = @gyms.search_by_name_and_address(params[:query])
     end
 
+    # user_location = nil
+    if session[:latitude].present? && session[:longitude].present?
+      user_location = [session[:latitude].to_f, session[:longitude].to_f]
+    end
+
     @markers = @gyms.map do |gym|
-      {
+      marker = {
+        id: gym.id,
         lat: gym.latitude,
         lng: gym.longitude,
         name: gym.name
       }
+
+      marker[:distance] = gym.distance_from(user_location) if user_location
+      marker
+    end
+
+    # @markers.sort_by! { |marker| marker[:distance] || Float::INFINITY }
+    @gyms = @gyms.sort_by do |gym|
+      marker = @markers.find { |m| m[:id] == gym.id }
+      marker[:distance] || Float::INFINITY
     end
   end
 
