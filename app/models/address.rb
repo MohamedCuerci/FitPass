@@ -5,7 +5,6 @@ class Address < ApplicationRecord
   after_validation :geocode, if: :should_geocode?
 
   def full_address
-    # Ajuste conforme seus campos
     [street, number, neighborhood, city, state].compact.join(', ')
   end
 
